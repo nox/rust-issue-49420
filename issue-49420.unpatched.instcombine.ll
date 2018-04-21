@@ -6,22 +6,22 @@ target triple = "x86_64-apple-darwin"
 ; Function Attrs: uwtable
 define void @repeat_take_collect([100000 x i8]* dereferenceable(100000) %result) unnamed_addr #0 {
 start:
-  %0 = getelementptr inbounds [100000 x i8], [100000 x i8]* %result, i64 0, i64 0
+  %tmp4 = getelementptr inbounds [100000 x i8], [100000 x i8]* %result, i64 0, i64 0
   br label %bb1
 
 bb1:                                              ; preds = %bb4, %start
-  %ptr.0 = phi i8* [ %0, %start ], [ %3, %bb4 ]
-  %iterator.sroa.0.0 = phi i64 [ 100000, %start ], [ %2, %bb4 ]
-  %1 = icmp eq i64 %iterator.sroa.0.0, 0
-  br i1 %1, label %bb3, label %bb4
+  %ptr.0 = phi i8* [ %tmp4, %start ], [ %tmp1.i2, %bb4 ]
+  %iterator.sroa.0.0 = phi i64 [ 100000, %start ], [ %tmp6.i, %bb4 ]
+  %tmp2.i = icmp eq i64 %iterator.sroa.0.0, 0
+  br i1 %tmp2.i, label %bb3, label %bb4
 
 bb3:                                              ; preds = %bb1
   ret void
 
 bb4:                                              ; preds = %bb1
-  %2 = add i64 %iterator.sroa.0.0, -1
+  %tmp6.i = add i64 %iterator.sroa.0.0, -1
   store i8 42, i8* %ptr.0, align 1
-  %3 = getelementptr inbounds i8, i8* %ptr.0, i64 1
+  %tmp1.i2 = getelementptr inbounds i8, i8* %ptr.0, i64 1
   br label %bb1
 }
 

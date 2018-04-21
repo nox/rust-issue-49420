@@ -6,16 +6,16 @@ target triple = "x86_64-apple-darwin"
 ; Function Attrs: uwtable
 define void @repeat_take_collect([100000 x i8]* dereferenceable(100000) %result) unnamed_addr #0 {
 start:
-  %0 = bitcast [100000 x i8]* %result to i8*
+  %tmp4 = bitcast [100000 x i8]* %result to i8*
   br label %bb1
 
 bb1:                                              ; preds = %bb4, %start
-  %ptr.0 = phi i8* [ %0, %start ], [ %7, %bb4 ]
+  %ptr.0 = phi i8* [ %tmp4, %start ], [ %tmp1.i2, %bb4 ]
   %iterator.sroa.0.0 = phi i64 [ 100000, %start ], [ %iterator.sroa.0.1, %bb4 ]
-  %1 = icmp ne i64 %iterator.sroa.0.0, 0
-  %2 = sub i64 %iterator.sroa.0.0, 1
-  %_0.i.sroa.0.0 = select i1 %1, i8 1, i8 0
-  %iterator.sroa.0.1 = select i1 %1, i64 %2, i64 %iterator.sroa.0.0
+  %tmp2.i = icmp ne i64 %iterator.sroa.0.0, 0
+  %tmp6.i = sub i64 %iterator.sroa.0.0, 1
+  %_0.i.sroa.0.0 = select i1 %tmp2.i, i8 1, i8 0
+  %iterator.sroa.0.1 = select i1 %tmp2.i, i64 %tmp6.i, i64 %iterator.sroa.0.0
   %_0.i.sroa.5.0.insert.ext = zext i8 42 to i16
   %_0.i.sroa.5.0.insert.shift = shl i16 %_0.i.sroa.5.0.insert.ext, 8
   %_0.i.sroa.5.0.insert.mask = and i16 undef, 255
@@ -26,11 +26,11 @@ bb1:                                              ; preds = %bb4, %start
   %abi_cast.sroa.0.0.extract.trunc = trunc i16 %_0.i.sroa.0.0.insert.insert to i8
   %abi_cast.sroa.4.0.extract.shift = lshr i16 %_0.i.sroa.0.0.insert.insert, 8
   %abi_cast.sroa.4.0.extract.trunc = trunc i16 %abi_cast.sroa.4.0.extract.shift to i8
-  %3 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
-  %4 = zext i1 %3 to i64
-  %5 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
-  %6 = zext i1 %5 to i64
-  %cond = icmp eq i64 %6, 1
+  %tmp13 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
+  %tmp14 = zext i1 %tmp13 to i64
+  %tmp17 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
+  %tmp18 = zext i1 %tmp17 to i64
+  %cond = icmp eq i64 %tmp18, 1
   br i1 %cond, label %bb4, label %bb3
 
 bb3:                                              ; preds = %bb1
@@ -38,7 +38,7 @@ bb3:                                              ; preds = %bb1
 
 bb4:                                              ; preds = %bb1
   store i8 %abi_cast.sroa.4.0.extract.trunc, i8* %ptr.0, align 1
-  %7 = getelementptr inbounds i8, i8* %ptr.0, i64 1
+  %tmp1.i2 = getelementptr inbounds i8, i8* %ptr.0, i64 1
   br label %bb1
 }
 

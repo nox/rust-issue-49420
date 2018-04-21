@@ -6,17 +6,17 @@ target triple = "x86_64-apple-darwin"
 ; Function Attrs: uwtable
 define void @repeat_take_collect([100000 x i8]* dereferenceable(100000) %result) unnamed_addr #0 {
 start:
-  %0 = bitcast [100000 x i8]* %result to i8*
+  %tmp4 = bitcast [100000 x i8]* %result to i8*
   br label %bb1
 
 bb1:                                              ; preds = %bb5, %start
-  %ptr.0 = phi i8* [ %0, %start ], [ %7, %bb5 ]
+  %ptr.0 = phi i8* [ %tmp4, %start ], [ %tmp1.i2, %bb5 ]
   %iterator.sroa.0.0 = phi i64 [ 100000, %start ], [ %iterator.sroa.0.1, %bb5 ]
-  %1 = icmp ne i64 %iterator.sroa.0.0, 0
-  br i1 %1, label %bb1.i, label %bb2.i
+  %tmp2.i = icmp ne i64 %iterator.sroa.0.0, 0
+  br i1 %tmp2.i, label %bb1.i, label %bb2.i
 
 bb1.i:                                            ; preds = %bb1
-  %2 = sub i64 %iterator.sroa.0.0, 1
+  %tmp6.i = sub i64 %iterator.sroa.0.0, 1
   br label %next.exit
 
 bb2.i:                                            ; preds = %bb1
@@ -24,7 +24,7 @@ bb2.i:                                            ; preds = %bb1
 
 next.exit:                                        ; preds = %bb2.i, %bb1.i
   %_0.i.sroa.0.0 = phi i8 [ 1, %bb1.i ], [ 0, %bb2.i ]
-  %iterator.sroa.0.1 = phi i64 [ %2, %bb1.i ], [ %iterator.sroa.0.0, %bb2.i ]
+  %iterator.sroa.0.1 = phi i64 [ %tmp6.i, %bb1.i ], [ %iterator.sroa.0.0, %bb2.i ]
   %_0.i.sroa.5.0.insert.ext = zext i8 42 to i16
   %_0.i.sroa.5.0.insert.shift = shl i16 %_0.i.sroa.5.0.insert.ext, 8
   %_0.i.sroa.5.0.insert.mask = and i16 undef, 255
@@ -38,11 +38,11 @@ next.exit:                                        ; preds = %bb2.i, %bb1.i
   br label %bb2
 
 bb2:                                              ; preds = %next.exit
-  %3 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
-  %4 = zext i1 %3 to i64
-  %5 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
-  %6 = zext i1 %5 to i64
-  switch i64 %6, label %bb3 [
+  %tmp13 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
+  %tmp14 = zext i1 %tmp13 to i64
+  %tmp17 = trunc i8 %abi_cast.sroa.0.0.extract.trunc to i1
+  %tmp18 = zext i1 %tmp17 to i64
+  switch i64 %tmp18, label %bb3 [
     i64 1, label %bb4
   ]
 
@@ -51,7 +51,7 @@ bb3:                                              ; preds = %bb2
 
 bb4:                                              ; preds = %bb2
   store i8 %abi_cast.sroa.4.0.extract.trunc, i8* %ptr.0, align 1
-  %7 = getelementptr inbounds i8, i8* %ptr.0, i64 1
+  %tmp1.i2 = getelementptr inbounds i8, i8* %ptr.0, i64 1
   br label %bb5
 
 bb5:                                              ; preds = %bb4

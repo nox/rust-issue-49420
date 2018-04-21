@@ -7,18 +7,18 @@ target triple = "x86_64-apple-darwin"
 define void @repeat_take_collect([100000 x i8]* dereferenceable(100000) %result) unnamed_addr #0 {
 start:
   %_8.sroa.0 = alloca i8
-  %0 = bitcast [100000 x i8]* %result to i8*
+  %tmp4 = bitcast [100000 x i8]* %result to i8*
   br label %bb1
 
 bb1:                                              ; preds = %bb5, %start
-  %ptr.0 = phi i8* [ %0, %start ], [ %10, %bb5 ]
+  %ptr.0 = phi i8* [ %tmp4, %start ], [ %tmp1.i2, %bb5 ]
   %iterator.sroa.0.0 = phi i64 [ 100000, %start ], [ %iterator.sroa.0.1, %bb5 ]
   call void @llvm.lifetime.start.p0i8(i64 1, i8* %_8.sroa.0)
-  %1 = icmp ne i64 %iterator.sroa.0.0, 0
-  br i1 %1, label %bb1.i, label %bb2.i
+  %tmp2.i = icmp ne i64 %iterator.sroa.0.0, 0
+  br i1 %tmp2.i, label %bb1.i, label %bb2.i
 
 bb1.i:                                            ; preds = %bb1
-  %2 = sub i64 %iterator.sroa.0.0, 1
+  %tmp6.i = sub i64 %iterator.sroa.0.0, 1
   br label %next.exit
 
 bb2.i:                                            ; preds = %bb1
@@ -26,24 +26,24 @@ bb2.i:                                            ; preds = %bb1
 
 next.exit:                                        ; preds = %bb2.i, %bb1.i
   %_0.i.sroa.0.0 = phi i8 [ 1, %bb1.i ], [ 0, %bb2.i ]
-  %iterator.sroa.0.1 = phi i64 [ %2, %bb1.i ], [ %iterator.sroa.0.0, %bb2.i ]
-  %3 = trunc i8 %_0.i.sroa.0.0 to i1
-  %4 = insertvalue { i1, i8 } undef, i1 %3, 0
-  %5 = insertvalue { i1, i8 } %4, i8 42, 1
-  %.fca.0.extract = extractvalue { i1, i8 } %5, 0
-  %_8.sroa.0.0.sroa_cast7 = bitcast i8* %_8.sroa.0 to i1*
-  store i1 %.fca.0.extract, i1* %_8.sroa.0.0.sroa_cast7
-  %.fca.1.extract = extractvalue { i1, i8 } %5, 1
+  %iterator.sroa.0.1 = phi i64 [ %tmp6.i, %bb1.i ], [ %iterator.sroa.0.0, %bb2.i ]
+  %tmp16.i = trunc i8 %_0.i.sroa.0.0 to i1
+  %tmp19.i = insertvalue { i1, i8 } undef, i1 %tmp16.i, 0
+  %tmp20.i = insertvalue { i1, i8 } %tmp19.i, i8 42, 1
+  %tmp20.i.fca.0.extract = extractvalue { i1, i8 } %tmp20.i, 0
+  %_8.sroa.0.0.sroa_cast4 = bitcast i8* %_8.sroa.0 to i1*
+  store i1 %tmp20.i.fca.0.extract, i1* %_8.sroa.0.0.sroa_cast4
+  %tmp20.i.fca.1.extract = extractvalue { i1, i8 } %tmp20.i, 1
   br label %bb2
 
 bb2:                                              ; preds = %next.exit
-  %_8.sroa.0.0._8.sroa.0.0. = load i8, i8* %_8.sroa.0
-  %6 = trunc i8 %_8.sroa.0.0._8.sroa.0.0. to i1
-  %7 = zext i1 %6 to i64
-  %_8.sroa.0.0._8.sroa.0.0.6 = load i8, i8* %_8.sroa.0
-  %8 = trunc i8 %_8.sroa.0.0._8.sroa.0.0.6 to i1
-  %9 = zext i1 %8 to i64
-  switch i64 %9, label %bb3 [
+  %_8.sroa.0.0._8.sroa.0.0.tmp8 = load i8, i8* %_8.sroa.0
+  %tmp9 = trunc i8 %_8.sroa.0.0._8.sroa.0.0.tmp8 to i1
+  %tmp10 = zext i1 %tmp9 to i64
+  %_8.sroa.0.0._8.sroa.0.0.tmp12 = load i8, i8* %_8.sroa.0
+  %tmp13 = trunc i8 %_8.sroa.0.0._8.sroa.0.0.tmp12 to i1
+  %tmp14 = zext i1 %tmp13 to i64
+  switch i64 %tmp14, label %bb3 [
     i64 1, label %bb4
   ]
 
@@ -52,8 +52,8 @@ bb3:                                              ; preds = %bb2
   ret void
 
 bb4:                                              ; preds = %bb2
-  store i8 %.fca.1.extract, i8* %ptr.0, align 1
-  %10 = getelementptr inbounds i8, i8* %ptr.0, i64 1
+  store i8 %tmp20.i.fca.1.extract, i8* %ptr.0, align 1
+  %tmp1.i2 = getelementptr inbounds i8, i8* %ptr.0, i64 1
   br label %bb5
 
 bb5:                                              ; preds = %bb4
