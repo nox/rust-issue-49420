@@ -35,9 +35,8 @@ bb2:                                              ; preds = %bb1
   %tmp8 = load i8, i8* %tmp7, align 1, !range !0
   %tmp9 = trunc i8 %tmp8 to i1
   %tmp10 = zext i1 %tmp9 to i64
-  %tmp11 = bitcast { i1, i8 }* %_8 to i8*
-  %tmp12 = load i8, i8* %tmp11, align 1, !range !0
-  %tmp13 = trunc i8 %tmp12 to i1
+  %tmp11 = getelementptr inbounds { i1, i8 }, { i1, i8 }* %_8, i32 0, i32 0
+  %tmp13 = load i1, i1* %tmp11
   %tmp14 = zext i1 %tmp13 to i64
   switch i64 %tmp14, label %bb3 [
     i64 1, label %bb4

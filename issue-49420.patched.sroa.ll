@@ -31,8 +31,8 @@ next.exit:                                        ; preds = %bb2.i, %bb1.i
   %tmp19.i = insertvalue { i1, i8 } undef, i1 %tmp16.i, 0
   %tmp20.i = insertvalue { i1, i8 } %tmp19.i, i8 42, 1
   %tmp20.i.fca.0.extract = extractvalue { i1, i8 } %tmp20.i, 0
-  %_8.sroa.0.0.sroa_cast4 = bitcast i8* %_8.sroa.0 to i1*
-  store i1 %tmp20.i.fca.0.extract, i1* %_8.sroa.0.0.sroa_cast4
+  %_8.sroa.0.0.sroa_cast6 = bitcast i8* %_8.sroa.0 to i1*
+  store i1 %tmp20.i.fca.0.extract, i1* %_8.sroa.0.0.sroa_cast6
   %tmp20.i.fca.1.extract = extractvalue { i1, i8 } %tmp20.i, 1
   br label %bb2
 
@@ -40,9 +40,9 @@ bb2:                                              ; preds = %next.exit
   %_8.sroa.0.0._8.sroa.0.0.tmp8 = load i8, i8* %_8.sroa.0
   %tmp9 = trunc i8 %_8.sroa.0.0._8.sroa.0.0.tmp8 to i1
   %tmp10 = zext i1 %tmp9 to i64
-  %_8.sroa.0.0._8.sroa.0.0.tmp12 = load i8, i8* %_8.sroa.0
-  %tmp13 = trunc i8 %_8.sroa.0.0._8.sroa.0.0.tmp12 to i1
-  %tmp14 = zext i1 %tmp13 to i64
+  %_8.sroa.0.0.sroa_cast5 = bitcast i8* %_8.sroa.0 to i1*
+  %_8.sroa.0.0._8.sroa.0.0.tmp13 = load i1, i1* %_8.sroa.0.0.sroa_cast5
+  %tmp14 = zext i1 %_8.sroa.0.0._8.sroa.0.0.tmp13 to i64
   switch i64 %tmp14, label %bb3 [
     i64 1, label %bb4
   ]
