@@ -31,41 +31,39 @@ bb1:                                              ; preds = %bb5, %start
   br label %bb2
 
 bb2:                                              ; preds = %bb1
-  %tmp7 = bitcast { i1, i8 }* %_8 to i8*
-  %tmp8 = load i8, i8* %tmp7, align 1, !range !0
-  %tmp9 = trunc i8 %tmp8 to i1
-  %tmp10 = zext i1 %tmp9 to i64
-  %tmp11 = bitcast { i1, i8 }* %_8 to i8*
-  %tmp12 = load i8, i8* %tmp11, align 1, !range !0
-  %tmp13 = trunc i8 %tmp12 to i1
-  %tmp14 = zext i1 %tmp13 to i64
-  switch i64 %tmp14, label %bb3 [
+  %tmp7 = bitcast { i1, i8 }* %_8 to i1*
+  %tmp8 = load i1, i1* %tmp7, align 1
+  %tmp9 = zext i1 %tmp8 to i64
+  %tmp10 = bitcast { i1, i8 }* %_8 to i1*
+  %tmp11 = load i1, i1* %tmp10, align 1
+  %tmp12 = zext i1 %tmp11 to i64
+  switch i64 %tmp12, label %bb3 [
     i64 1, label %bb4
   ]
 
 bb3:                                              ; preds = %bb2
-  %tmp15 = bitcast { i1, i8 }* %_8 to i8*
-  call void @llvm.lifetime.end.p0i8(i64 2, i8* %tmp15)
-  %tmp16 = bitcast i8** %ptr to i8*
-  call void @llvm.lifetime.end.p0i8(i64 8, i8* %tmp16)
-  %tmp17 = bitcast { i64, i8 }* %iterator to i8*
-  call void @llvm.lifetime.end.p0i8(i64 16, i8* %tmp17)
+  %tmp13 = bitcast { i1, i8 }* %_8 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 2, i8* %tmp13)
+  %tmp14 = bitcast i8** %ptr to i8*
+  call void @llvm.lifetime.end.p0i8(i64 8, i8* %tmp14)
+  %tmp15 = bitcast { i64, i8 }* %iterator to i8*
+  call void @llvm.lifetime.end.p0i8(i64 16, i8* %tmp15)
   ret void
 
 bb4:                                              ; preds = %bb2
-  %tmp18 = bitcast { i1, i8 }* %_8 to %"core::option::Option<u8>::Some"*
-  %tmp19 = getelementptr inbounds %"core::option::Option<u8>::Some", %"core::option::Option<u8>::Some"* %tmp18, i32 0, i32 1
-  %tmp20 = load i8, i8* %tmp19, align 1
-  %tmp21 = load i8*, i8** %ptr, align 8
-  store i8 %tmp20, i8* %tmp21, align 1
-  %tmp22 = load i8*, i8** %ptr, align 8
-  %tmp23 = call i8* @offset(i8* %tmp22, i64 1)
+  %tmp16 = bitcast { i1, i8 }* %_8 to %"core::option::Option<u8>::Some"*
+  %tmp17 = getelementptr inbounds %"core::option::Option<u8>::Some", %"core::option::Option<u8>::Some"* %tmp16, i32 0, i32 1
+  %tmp18 = load i8, i8* %tmp17, align 1
+  %tmp19 = load i8*, i8** %ptr, align 8
+  store i8 %tmp18, i8* %tmp19, align 1
+  %tmp20 = load i8*, i8** %ptr, align 8
+  %tmp21 = call i8* @offset(i8* %tmp20, i64 1)
   br label %bb5
 
 bb5:                                              ; preds = %bb4
-  store i8* %tmp23, i8** %ptr, align 8
-  %tmp24 = bitcast { i1, i8 }* %_8 to i8*
-  call void @llvm.lifetime.end.p0i8(i64 2, i8* %tmp24)
+  store i8* %tmp21, i8** %ptr, align 8
+  %tmp22 = bitcast { i1, i8 }* %_8 to i8*
+  call void @llvm.lifetime.end.p0i8(i64 2, i8* %tmp22)
   br label %bb1
 }
 
@@ -89,25 +87,23 @@ bb1:                                              ; preds = %start
   %tmp9 = bitcast { i1, i8 }* %_0 to %"core::option::Option<u8>::Some"*
   %tmp10 = getelementptr inbounds %"core::option::Option<u8>::Some", %"core::option::Option<u8>::Some"* %tmp9, i32 0, i32 1
   store i8 %tmp8, i8* %tmp10, align 1
-  %tmp11 = bitcast { i1, i8 }* %_0 to i8*
-  store i8 1, i8* %tmp11, align 1
+  %tmp11 = bitcast { i1, i8 }* %_0 to i1*
+  store i1 true, i1* %tmp11, align 1
   br label %bb3
 
 bb2:                                              ; preds = %start
-  %tmp12 = bitcast { i1, i8 }* %_0 to i8*
-  store i8 0, i8* %tmp12, align 1
+  %tmp12 = bitcast { i1, i8 }* %_0 to i1*
+  store i1 false, i1* %tmp12, align 1
   br label %bb3
 
 bb3:                                              ; preds = %bb2, %bb1
   %tmp13 = getelementptr inbounds { i1, i8 }, { i1, i8 }* %_0, i32 0, i32 0
-  %tmp14 = bitcast i1* %tmp13 to i8*
-  %tmp15 = load i8, i8* %tmp14, align 1, !range !0
-  %tmp16 = trunc i8 %tmp15 to i1
-  %tmp17 = getelementptr inbounds { i1, i8 }, { i1, i8 }* %_0, i32 0, i32 1
-  %tmp18 = load i8, i8* %tmp17, align 1
-  %tmp19 = insertvalue { i1, i8 } undef, i1 %tmp16, 0
-  %tmp20 = insertvalue { i1, i8 } %tmp19, i8 %tmp18, 1
-  ret { i1, i8 } %tmp20
+  %tmp14 = load i1, i1* %tmp13, align 1
+  %tmp15 = getelementptr inbounds { i1, i8 }, { i1, i8 }* %_0, i32 0, i32 1
+  %tmp16 = load i8, i8* %tmp15, align 1
+  %tmp17 = insertvalue { i1, i8 } undef, i1 %tmp14, 0
+  %tmp18 = insertvalue { i1, i8 } %tmp17, i8 %tmp16, 1
+  ret { i1, i8 } %tmp18
 }
 
 ; Function Attrs: uwtable
@@ -135,5 +131,3 @@ declare void @llvm.lifetime.end.p0i8(i64, i8* nocapture) #1
 
 attributes #0 = { uwtable "no-frame-pointer-elim"="true" "probe-stack"="__rust_probestack" }
 attributes #1 = { argmemonly nounwind }
-
-!0 = !{i8 0, i8 2}
